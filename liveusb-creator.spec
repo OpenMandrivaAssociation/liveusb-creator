@@ -2,14 +2,14 @@
 
 Name:           liveusb-creator
 Version:        3.9.1
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other
 License:        GPLv2
 URL:            https://fedorahosted.org/liveusb-creator
 Source0:        https://fedorahosted.org/releases/l/i/liveusb-creator/%{name}-%{version}.tar.bz2
-Patch0: liveusb-creator-ext4.diff 
+Patch0:		liveusb-creator-ext4.diff 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -19,7 +19,7 @@ ExcludeArch:    ppc64
 BuildRequires:  python-devel, python-setuptools, python-qt4-devel, desktop-file-utils gettext
 Requires:       syslinux, python-qt4, usermode, isomd5sum
 Requires:       python-urlgrabber python-dbus
-Requires:       pyparted >= 2.0
+Requires:       python-parted >= 2.0
 
 %description
 A liveusb creator from Live Fedora images

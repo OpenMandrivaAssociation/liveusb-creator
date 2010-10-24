@@ -1,8 +1,8 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           liveusb-creator
-Version:        3.9.1
-Release:        %mkrel 2
+Version:        3.9.2
+Release:        %mkrel 1
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other

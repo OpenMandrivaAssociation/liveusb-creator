@@ -2,7 +2,7 @@
 
 Name:           liveusb-creator
 Version:        3.9.2
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other
@@ -10,7 +10,7 @@ License:        GPLv2
 URL:            https://fedorahosted.org/liveusb-creator
 Source0:        https://fedorahosted.org/releases/l/i/liveusb-creator/%{name}-%{version}.tar.bz2
 Patch0:		liveusb-creator-ext4.diff 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildArch:      noarch
 ExcludeArch:    ppc

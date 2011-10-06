@@ -1,15 +1,14 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           liveusb-creator
-Version:        3.9.2
-Release:        %mkrel 2
+Version:        3.11.1
+Release:        %mkrel 1
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other
 License:        GPLv2
 URL:            https://fedorahosted.org/liveusb-creator
 Source0:        https://fedorahosted.org/releases/l/i/liveusb-creator/%{name}-%{version}.tar.bz2
-Patch0:		liveusb-creator-ext4.diff 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildArch:      noarch
@@ -26,7 +25,6 @@ A liveusb creator from Live Fedora images
 
 %prep
 %setup -q
-%patch0 -p0
 
 %build
 %{__python} setup.py build

@@ -2,7 +2,7 @@
 
 Name:           liveusb-creator
 Version:        3.11.6
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other
@@ -12,8 +12,6 @@ Source0:        https://fedorahosted.org/releases/l/i/liveusb-creator/%{name}-%{
 Source1:	releases.py
 Source2:	liveusb-header.png
 Source3:	mandrivausb.png
-Patch0:		mdv-creator-data.patch
-Patch1:		mdv-creator-po.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildArch:      noarch
@@ -30,8 +28,21 @@ A liveusb creator from Live Mandriva images
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+
+#replace Fedora for Mandriva
+sed -i 's/fedorausb.png/mandrivausb.png/' data/liveusb-creator.desktop
+
+for a in data/*; do
+sed -i 's/Fedora/Mandriva/g' $a
+done
+
+for a in liveusb/*.py; do
+sed -i 's/Fedora/Mandriva/g' $a
+done
+
+for a in po/*.po; do
+sed -i 's/Fedora/Mandriva/g' $a
+done
 
 cp -f %{SOURCE1} liveusb/
 cp -f %{SOURCE2} data/

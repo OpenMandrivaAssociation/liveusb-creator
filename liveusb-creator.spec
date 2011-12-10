@@ -1,7 +1,7 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           liveusb-creator
-Version:        3.11.1
+Version:        3.11.6
 Release:        %mkrel 1
 Summary:        A liveusb creator
 
@@ -9,6 +9,11 @@ Group:          System/Configuration/Other
 License:        GPLv2
 URL:            https://fedorahosted.org/liveusb-creator
 Source0:        https://fedorahosted.org/releases/l/i/liveusb-creator/%{name}-%{version}.tar.bz2
+Source1:	releases.py
+Source2:	liveusb-header.png
+Source3:	mandrivausb.png
+Patch0:		mdv-creator-data.patch
+Patch1:		mdv-creator-po.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildArch:      noarch
@@ -21,12 +26,21 @@ Requires:       python-urlgrabber python-dbus
 Requires:       python-parted >= 2.0
 
 %description
-A liveusb creator from Live Fedora images
+A liveusb creator from Live Mandriva images
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+
+cp -f %{SOURCE1} liveusb/
+cp -f %{SOURCE2} data/
+cp -f %{SOURCE3} data/
+
+rm -f liveusb/resources_rc.py
 
 %build
+pyrcc4 data/resources.qrc -o liveusb/resources_rc.py
 %{__python} setup.py build
 make mo
 make mo

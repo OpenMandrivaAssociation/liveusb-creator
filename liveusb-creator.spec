@@ -2,7 +2,7 @@
 
 Name:           liveusb-creator
 Version:        3.11.6
-Release:        %mkrel 2
+Release:        %mkrel 3
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other

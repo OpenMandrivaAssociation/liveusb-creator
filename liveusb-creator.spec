@@ -2,7 +2,7 @@
 
 Name:           liveusb-creator
 Version:        3.11.6
-Release:        %mkrel 5
+Release:        %mkrel 6
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other
@@ -14,6 +14,7 @@ Source2:	liveusb-header.png
 Source3:	mandrivausb.png
 #Use Live ISO more than 1.5 Gb
 Patch0:		liveusb-3.11.6-increase-iso.patch
+Patch1:		liveusb-3.11.6-isolinux-dir.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildArch:      noarch
@@ -31,6 +32,7 @@ A liveusb creator from Live Mandriva images
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 #replace Fedora for Mandriva
 sed -i 's/fedorausb.png/mandrivausb.png/' data/liveusb-creator.desktop

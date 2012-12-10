@@ -1,20 +1,14 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           liveusb-creator
-Version:        3.11.6
-Release:        %mkrel 7
+Version:        3.11.1
+Release:        %mkrel 1
 Summary:        A liveusb creator
 
 Group:          System/Configuration/Other
 License:        GPLv2
 URL:            https://fedorahosted.org/liveusb-creator
 Source0:        https://fedorahosted.org/releases/l/i/liveusb-creator/%{name}-%{version}.tar.bz2
-Source1:	releases.py
-Source2:	liveusb-header.png
-Source3:	mandrivausb.png
-#Use Live ISO more than 1.5 Gb
-Patch0:		liveusb-3.11.6-increase-iso.patch
-Patch1:		liveusb-3.11.6-isolinux-dir.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildArch:      noarch
@@ -27,36 +21,12 @@ Requires:       python-urlgrabber python-dbus
 Requires:       python-parted >= 2.0
 
 %description
-A liveusb creator from Live Mandriva images
+A liveusb creator from Live Fedora images
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-
-#replace Fedora for Mandriva
-sed -i 's/fedorausb.png/mandrivausb.png/' data/liveusb-creator.desktop
-
-for a in data/*; do
-sed -i 's/Fedora/Mandriva/g' $a
-done
-
-for a in liveusb/*.py; do
-sed -i 's/Fedora/Mandriva/g' $a
-done
-
-for a in po/*.po; do
-sed -i 's/Fedora/Mandriva/g' $a
-done
-
-cp -f %{SOURCE1} liveusb/
-cp -f %{SOURCE2} data/
-cp -f %{SOURCE3} data/
-
-rm -f liveusb/resources_rc.py
 
 %build
-pyrcc4 data/resources.qrc -o liveusb/resources_rc.py
 %{__python} setup.py build
 make mo
 make mo
@@ -97,3 +67,143 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/pam.d/%{name}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
 
+
+
+%changelog
+* Thu Oct 06 2011 Zombie Ryushu <ryushu@mandriva.org> 3.11.1-1mdv2011.0
++ Revision: 703217
+- Upgrade to 3.11.1 to fix iso9660 for Mandriva 2011
+
+* Sat Nov 13 2010 Bogdano Arendartchuk <bogdano@mandriva.com> 3.9.2-2mdv2011.0
++ Revision: 597038
+- rebuild for python 2.7
+
+  + Sandro Cazzaniga <kharec@mandriva.org>
+    - New version 3.9.2
+
+* Tue Dec 22 2009 Ahmad Samir <ahmadsamir@mandriva.org> 3.9.1-2mdv2010.1
++ Revision: 481582
+- Fix requires (bug #56589)
+
+* Sun Dec 20 2009 Thierry Vignaud <tv@mandriva.org> 3.9.1-1mdv2010.1
++ Revision: 480265
+- import liveusb-creator
+
+
+* Tue Dec 08 2009 Luke Macken <lmacken@redhat.com> - 3.9.1-1
+- 3.9.1 bugfix release
+
+* Tue Dec 01 2009 Luke Macken <lmacken@redhat.com> - 3.9-1
+- 3.9 release
+
+* Tue Dec 01 2009 Luke Macken <lmacken@redhat.com> - 3.8.9-1
+- 3.8.9, fixes bug #540255
+
+* Tue Dec 01 2009 Luke Macken <lmacken@redhat.com> - 3.8.8-1
+- 3.8.8, bugfix release
+
+* Tue Nov 17 2009 Luke Macken <lmacken@redhat.com> - 3.8.7-1
+- 3.8.7, containing the F12 release
+
+* Sat Nov 07 2009 Luke Macken <lmacken@redhat.com> - 3.8.6-1
+- 3.8.6
+
+* Thu Aug 27 2009 Luke Macken <lmacken@redhat.com> - 3.7.3-1
+- 3.7.3
+
+* Wed Aug 05 2009 Luke Macken <lmacken@redhat.com> - 3.7.2-1
+- 3.7.2
+
+* Sat Jun 27 2009 Luke Macken <lmacken@redhat.com> - 3.7.1-1
+- 3.7.1
+
+* Wed Jun 24 2009 Luke Macken <lmacken@redhat.com> - 3.7
+- Latest upstream bugfix release
+
+* Fri Jun 12 2009 Luke Macken <lmacken@redhat.com> - 3.6.8-1
+- Latest upstream bugfix release
+
+* Tue Jun 09 2009 Luke Macken <lmacken@redhat.com> - 3.6.7-1
+- Fix a bug with ext formatted sticks
+
+* Tue Jun 09 2009 Luke Macken <lmacken@redhat.com> - 3.6.6-1
+- Update to v3.6.6
+- Merge the dcon-unfreeze patch upstream
+- Add Fedora 11 to the release list
+
+* Wed May 20 2009 Christoph Wickert <cwickert@fedoraproject.org> - 3.6.5-3
+- Make olpc.fth unfreeze disply for newer BIOSes than Q2E30 (#501688)
+
+* Thu Apr 09 2009 Luke Macken <lmacken@redhat.com> 3.6.5-2
+- Fix the checksum verification to support sha256
+
+* Thu Apr 09 2009 Luke Macken <lmacken@redhat.com> 3.6.5-1
+- Update to v3.6.5, which supports F11 beta, and the latest SoaS releases
+
+* Wed Mar 18 2009 Luke Macken <lmacken@redhat.com> 3.6.4-1
+- Update to v3.6.4, which works with the PyParted 2.0 API
+
+* Thu Mar 12 2009 Luke Macken <lmacken@redhat.com> 3.6.3-1
+- Update to v3.6.3
+
+* Mon Mar 07 2009 Luke Macken <lmacken@redhat.com> 3.6-1
+- Require pyparted
+- Update to v3.6
+
+* Fri Mar 06 2009 wwp <subscript@free.fr> 3.5-2
+- Fix dd commands when output path contain whitespaces
+
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> 3.5-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Fri Jan 16 2009 Luke Macken <lmacken@redhat.com> 3.5-1
+- Update to v3.5
+
+* Fri Jan 16 2009 Luke Macken <lmacken@redhat.com> 3.4-1
+- Update to 3.4.
+
+* Fri Jan 16 2009 Luke Macken <lmacken@redhat.com> 3.3-2
+- Require python-urlgrabber
+
+* Fri Jan 15 2009 Luke Macken <lmacken@redhat.com> 3.3-1
+- Update to 3.3
+
+* Fri Jan 02 2009 Luke Macken <lmacken@redhat.com> 3.2-1
+- Fixed some syslinux-related issues (#167)
+- Fixed some windows-related logging problems (#337)
+- Mitigate a DBus/HAL-related segfault by unmounting upon termination
+
+* Thu Jan 01 2009 Luke Macken <lmacken@redhat.com> 3.1-1
+- Latest upstream release, containing some windows-specific
+  optimizations and fixes.
+
+* Mon Dec 29 2008 Luke Macken <lmacken@redhat.com> 3.0-4
+- Latest upstream release.
+- Fedora 10 support
+- Update to the latest sugar spin
+- Lots of bug fixes and code improvements
+- Improved OLPC support with the --xo flag
+- Translation improvements
+    - Greek translation (Nikos Charonitakis)
+    - Slovak translation (Ondrej Sulek)
+    - Catalan translation (Xavier Conde)
+    - French translation (PabloMartin-Gomez)
+    - Serbian (Milos Komarcevic)
+    - Chinese (sainrysec)
+
+* Fri Oct 03 2008 Luke Macken <lmacken@redhat.com> 3.0-2
+- Exclude ppc and ppc64, as syslinux will not work on those architectures.
+
+* Fri Aug 29 2008 Luke Macken <lmacken@redhat.com> 3.0-1
+- Latest upstream release, containing various bugfixes
+- Fedora 10 Beta support
+- Brazilian Portuguese translation (Igor Pires Soares)
+- Spanish translation (Domingo Becker)
+- Malay translation (Sharuzzaman Ahmat Raslan)
+- German Translation (Marcus Nitzschke, Fabian Affolter)
+- Polish translation (Piotr Drąg)
+- Portuguese translation (Valter Fukuoka)
+- Czech translation (Adam Pribyl)
+
+* Tue Aug 12 2008 Kushal Das <kushal@fedoraproject.org> 2.7-1
+- Initial release

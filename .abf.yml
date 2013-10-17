@@ -1,2 +1,4 @@
+removed_sources:
+  liveusb-creator-3.11.1.tar.bz2: c7af8862cdd213ce28760b2b778fc2eec4716673
 sources:
-  "liveusb-creator-3.11.1.tar.bz2": c7af8862cdd213ce28760b2b778fc2eec4716673
+  liveusb-creator-3.11.8.tar.bz2: 49774087d7a12c9eaf442218600d5dca5b927629

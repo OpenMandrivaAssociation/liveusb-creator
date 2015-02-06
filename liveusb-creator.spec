@@ -2,7 +2,7 @@
 
 Name:           liveusb-creator
 Version:        3.11.8
-Release:        1
+Release:        2
 Summary:        Tool to create bootable USB sticks from Live CDs
 
 Group:          System/Configuration/Other

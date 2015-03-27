@@ -1,8 +1,8 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python_sitelib: %define python_sitelib %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           liveusb-creator
-Version:        3.11.8
-Release:        2
+Version:        3.12.0
+Release:        1
 Summary:        Tool to create bootable USB sticks from Live CDs
 
 Group:          System/Configuration/Other
@@ -26,13 +26,12 @@ Tool to create bootable USB sticks from Live CDs
 %setup -q
 
 %build
-%{__python} setup.py build
+python setup.py build
 %make mo
 
 %install
-rm -rf %{buildroot}
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
-%{__rm} -r liveusb/urlgrabber
+python setup.py install -O1 --skip-build --root %{buildroot}
+rm -r liveusb/urlgrabber
 
 # Adjust for console-helper magic
 mkdir -p %{buildroot}%{_sbindir}
@@ -53,7 +52,7 @@ rm -rf %{buildroot}/%{_datadir}/applications/liveusb-creator.desktop
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc README.txt LICENSE.txt
-%{python_sitelib}/*
+%{py_puresitedir}/*
 %{_bindir}/%{name}
 %{_sbindir}/%{name}
 %{_datadir}/applications/OpenMandriva-liveusb-creator.desktop

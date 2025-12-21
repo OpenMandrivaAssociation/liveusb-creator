@@ -14,6 +14,7 @@ BuildArch:      noarch
 ExcludeArch:    ppc
 ExcludeArch:    ppc64
 
+BuildRequires:	make
 BuildRequires:  python-devel, python-setuptools, python-qt4-devel, desktop-file-utils gettext
 Requires:       syslinux, python-qt4, usermode, isomd5sum
 Requires:       python-urlgrabber python-dbus
